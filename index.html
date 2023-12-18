@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas AGHHHHHH :></title>
+    <style>
+        body{
+            height:100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color:cadetblue;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            min-width: 100px;
+        }
+        #canvas{
+            border:5px solid rgb(255, 252, 252);
+            transform: scale(0.8);
+            border-radius: 0.2rem;
+        }
+        .yes{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            column-gap: 1rem;
+            justify-items: baseline;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0;
+        }
+        #jump{
+            padding: 1rem;
+            border-radius: 5rem;
+            border:2px solid rgb(8, 50, 52);
+            font-size: 18px;
+            box-shadow: 0 0 2rem rgb(8, 50, 52, 0.2);
+            transition: cubic-bezier(0.075, 0.82, 0.165, 1) 90ms;
+        }
+        #jump:hover{
+            background-color: rgb(86, 79, 87);
+            color:aliceblue;
+            
+        }
+        #average_height{
+            height:50px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        .container{
+            display: flex;
+            justify-content: center;
+            margin-bottom: 0rem;
+        }
+        input{
+            padding: 0.4rem;
+            font-size: 18px;
+            border:2px solid rgb(8, 50, 52);
+            box-shadow: 0 0 2rem rgb(8, 50, 52, 0.2);
+        }
+        #animationMode{
+            height: 2rem;
+            width: 2rem;
+            display: inline-block;
+            border:2px solid rgb(8, 50, 52);
+        }
+        footer{
+            display: flex;
+            justify-content: center;
+            width: 200px;
+            flex-direction: row-reverse;
+            margin: 0;
+            border:1px solid rgb(8, 50, 52);
+            padding: 0.2rem;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <canvas id="canvas" height="800px" width="1700px">
+
+        </canvas>
+        
+        <div class="container">
+            <div class="yes">
+                <section style="max-width: 800px;">
+                    <button id="jump">
+                        Generate lines thingy
+                    </button>
+                </section>
+                <section>
+                    <h2 id="average_height">Average height: 0</h2>
+                </section>
+                <section style="margin-left:3rem;">
+                    <p>Max value is: 1000</p>
+                    <input placeholder="Enter how many lines" type="text" name="" id="input">
+                    
+                </section>
+                <section style="margin-left:3rem;">
+                    <p>Disable animation (disabling will make it wayyyy faster)</p>
+                    <input type="checkbox" name="" id="animationMode">
+                </section>
+            </div>
+            <footer>
+                <!-- hehe im placing a footer inside a main tag, how dumb of me -_- -->
+                <p style="font-family: 'Courier New', Courier, monospace;font-size: 1rem;">By: Myrtletea / Kezabi / Nonaxce(r)</p>
+            </footer>
+        </div>
+        
+    </main>
+    
+    <script>
+        alert("not that good to use on a phone/small screen" + `
+            <@>=============<@> ttqwteutquweuqtwe
+        
+        `);
+        let c = document.getElementById("canvas");
+        var ctx = c.getContext("2d");
+
+        const change = document.getElementById("jump");
+        let input = document.getElementById("input");
+        let mode = document.getElementById("animationMode");
+        let average_heightElem = document.getElementById("average_height");
+
+        let x = 0;
+        let y = 800;
+        let xDim = 0;
+        let height = 0;
+
+        let mainBarColor = "rgb(8, 50, 52)";
+        let highBarColor = "magenta";
+        let lowBarColor = "red";
+
+        let averageHeight = "";
+        let arrayLength = "";
+        change.addEventListener('click', changeThingy);
+
+        // generates and changes the thingy to a different one
+        function changeThingy() {
+
+            if(!(input.value)) {
+                arrayLength = 1;
+            }else if(input.value > 1000){
+                arrayLength = 1000;
+            }else{
+                arrayLength = Number(input.value);
+            }
+
+            // resets x and y coords to 0
+            x = 0;
+            y = 800;
+            // creates an array that contains random whole numbers between 0 and 800
+            let array1 = [];
+            for (let i = 0; i < arrayLength; i++) {
+                array1.push(Math.floor(Math.random()*800));
+            }
+            xDim = (1700/array1.length);
+
+            // every item in the array corresponds a height
+            // the height which is the height of the rectangle
+            // this will loop till it reaches the last part of the list
+            ctx.clearRect(0, 800, xDim, -800)
+            let j = 0;
+            if(document.getElementById("animationMode").checked == false) {
+                let remvoe = setInterval(()=> {
+                //j = 0;              
+                    if(j < array1.length) {
+                        // chooses a color for the line based on this value
+                        if(array1[j] <= 50) {
+                            ctx.fillStyle = highBarColor;
+                        } else if(array1[j] >= 750) {
+                            ctx.fillStyle = lowBarColor;
+                        } else {
+                            ctx.fillStyle = mainBarColor;
+                        }
+                        
+                        ctx.fillRect(x, y, xDim, (array1[j]-800));
+                        x += xDim; // increment the x by the width of the line
+                        j++; // increment j
+                        ctx.clearRect(x, y, xDim, -800);
+                    } else {
+                        console.log("hi");
+                        clearInterval(remvoe)
+                        // calculates the average height of a bar thingy
+                        let sum = 0;
+                        for (let i = 0; i < array1.length; i++) {
+                            sum += array1[i];
+                        }
+                
+                        averageHeight = (sum/array1.length); 
+                        console.log(averageHeight);
+                        average_heightElem.innerHTML = `Average height: <i>${averageHeight}</i>`;
+                    }
+                }, 5); // actually runs between ~16ish to 10ish miliseconds something
+
+            } else {
+                for (let i = 0; i < arrayLength; i++) {
+                    if(array1[i] <= 50) {
+                        ctx.fillStyle = highBarColor;
+                    } else if(array1[i] >= 750) {
+                        ctx.fillStyle = lowBarColor;
+                    } else {
+                        ctx.fillStyle = mainBarColor;
+                    }
+                    
+                    ctx.fillRect(x, y, xDim, (array1[i]-800));
+                    x += xDim;
+                    j++;
+                    ctx.clearRect(x, y, xDim, -800);
+                }
+                // calculates the average height of a bar thingy
+                let sum = 0;
+                for (let i = 0; i < array1.length; i++) {
+                    sum += array1[i];
+                }
+                averageHeight = (sum/array1.length);
+                console.log(averageHeight);
+                average_heightElem.innerHTML = `Average height: <i>${averageHeight}</i>`;
+            }
+        }
+    </script>
+</body>
+</html>
