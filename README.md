@@ -1,6 +1,6 @@
-PS: **The viewport is not very optimized for mobile (u can't even push the generate button)**
+PS: **The viewport is not very optimized for mobile (u can't even push the generate button✨🥳)**
 
-This `<canvas>` based website randomly generates bar lines using a random array and displays
+This ✨`<canvas>`✨ based website randomly generates bar lines using a random array and displays
   it to the screen. Magenta lines exceed 750 while red lines are less than 50
 
 Currently you can only generate the bar lines with the already random array generator,
