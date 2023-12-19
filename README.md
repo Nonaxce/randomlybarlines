@@ -5,7 +5,7 @@ This `<canvas>` based website randomly generates bar lines using a random array 
 
 Currently you can only generate the bar lines with the already random array generator,
   but soon I may add more user input and customizability.
-Will add more stats soon other than average height
+Will add more stats soon other than average height.
 
 Yeah tinkering around with `<canvas>` and javascript led me to this :P. 
 
